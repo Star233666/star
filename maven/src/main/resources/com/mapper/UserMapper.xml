@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+<!--    Denglu-->
+    <select id="selectByUserName" resultType="com.pojo.User">
+        SELECT * FROM t_user WHERE userName = #{userName}
+    </select>
+
+<!--    zhuce-->
+    <select id="checkUserNameExists" parameterType="string" resultType="int">
+        SELECT COUNT(1) FROM t_user WHERE userName = #{userName}
+    </select>
+
+    <insert id="insertUser">
+        INSERT INTO t_user (userName, passWord)
+        VALUES (#{userName}, #{passWord})
+    </insert>
+
+<!--    wangjimima-->
+    <update id="updatePassword">
+        update t_user
+        set passWord = #{newPassword}
+        where userName = #{userName}
+    </update>
+
+    <!--    person-->
+    <select id="getUserByUsername" resultType="java.util.HashMap">
+        SELECT sno, name, year, sex
+        FROM t_user
+        WHERE userName = #{username}
+    </select>
+<!--    xiugaimima-->
+    <update id="updatePasswordByUsername">
+        UPDATE t_user
+        SET passWord = #{password}
+        WHERE userName = #{username}
+    </update>
+</mapper>

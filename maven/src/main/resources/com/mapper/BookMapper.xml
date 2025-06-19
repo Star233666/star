@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BookMapper">
+<!--Book-->
+    <!-- 插入图书 -->
+    <insert id="insertBook">
+        insert into t_Book(BookName, AuthorName, PublishTime, `Condition`)
+        values (#{bookName}, #{authorName}, #{publishTime}, #{condition})
+    </insert>
+    <!-- 查询所有图书 -->
+    <select id="selectAllBooks" resultType="java.util.HashMap">
+        select * from t_Book
+    </select>
+
+<!--BookXx-->
+    <!-- 检查图书状态 -->
+    <select id="checkBookStatus" resultType="java.lang.String">
+        SELECT `Condition`
+        FROM t_Book
+        WHERE BookName = #{bookName}
+    </select>
+
+    <!-- 获取图书详细信息 -->
+    <select id="getBookInfo" resultType="java.util.HashMap">
+        SELECT BookName, AuthorName, PublishTime
+        FROM t_Book
+        WHERE BookName = #{bookName}
+    </select>
+
+    <!-- 更新图书状态 -->
+    <update id="updateBookStatus">
+        UPDATE t_Book
+        SET `Condition` = #{newStatus}
+        WHERE BookName = #{bookName}
+    </update>
+
+    <!-- 检查副本是否存在 -->
+    <select id="checkBookCopyExists" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM t_book_copy
+        WHERE BookName = #{bookName}
+    </select>
+
+    <!-- 插入图书副本 -->
+    <insert id="insertBookCopy">
+        INSERT INTO t_book_copy(BookName, AuthorName, PublishTime, `Condition`)
+        VALUES (#{bookName}, #{authorName}, #{publishTime}, #{status})
+    </insert>
+
+    <!-- 更新图书副本状态 -->
+    <update id="updateBookCopyStatus">
+        UPDATE t_book_copy
+        SET `Condition` = #{newStatus}
+        WHERE BookName = #{bookName}
+    </update>
+</mapper>
